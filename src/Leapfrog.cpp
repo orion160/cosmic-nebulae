@@ -3,11 +3,7 @@
 #include "Body.hpp"
 #include "ForceEngine.hpp"
 
-LeapfrogIntegrator::LeapfrogIntegrator(const ForceEngine &forceEngine) : Integrator{forceEngine}
-{
-}
-
-void LeapfrogIntegrator::initialize(std::vector<Body> &bodies)
+void LeapfrogIntegrator::initialize(std::vector<Body> &bodies, const ForceEngine &forceEngine)
 {
     using size_type = std::vector<Body>::size_type;
 
@@ -21,7 +17,7 @@ void LeapfrogIntegrator::initialize(std::vector<Body> &bodies)
     isInitialized = true;
 }
 
-void LeapfrogIntegrator::operator()(std::vector<Body> &bodies, const double deltaTime)
+void LeapfrogIntegrator::operator()(std::vector<Body> &bodies, const double deltaTime, const ForceEngine &forceEngine)
 {
     using size_type = std::vector<Body>::size_type;
 

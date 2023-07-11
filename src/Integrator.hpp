@@ -2,18 +2,17 @@
 
 #include <vector>
 
-class ForceEngine;
+#include "ForceEngine.hpp"
 
 class Body;
 
 class Integrator
 {
   public:
-    Integrator(const ForceEngine &forceEngine);
+    virtual void initialize(std::vector<Body> &bodies, const ForceEngine &forceEngine) = 0;
+    virtual void operator()(std::vector<Body> &bodies, const double deltaTime, const ForceEngine &forceEngine) = 0;
 
-    virtual void initialize(std::vector<Body> &bodies) = 0;
-    virtual void operator()(std::vector<Body> &bodies, const double deltaTime) = 0;
-
-  protected:
-    const ForceEngine &forceEngine;
+    virtual ~Integrator()
+    {
+    }
 };

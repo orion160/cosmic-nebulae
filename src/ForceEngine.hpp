@@ -14,6 +14,10 @@ class ForceEngine
 
     virtual std::vector<Eigen::Vector3d> operator()(std::vector<Body> &bodies) const = 0;
 
+    virtual ~ForceEngine()
+    {
+    }
+
   private:
     virtual inline Eigen::Vector3d bodyBodyInteraction(Body &current, Body &other) const noexcept = 0;
 };
