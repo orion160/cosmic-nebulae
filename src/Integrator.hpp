@@ -11,6 +11,7 @@ class Integrator
   public:
     Integrator(const ForceEngine &forceEngine);
 
+    virtual void initialize(std::vector<Body> &bodies) = 0;
     virtual void operator()(std::vector<Body> &bodies, const double deltaTime) = 0;
 
   protected:

@@ -33,6 +33,13 @@ int main(int argc, char **argv)
     BasicForceEngine forceEngine{};
     LeapfrogIntegrator integrator{forceEngine};
 
+    std::cout << "After the initialization:\n";
+    integrator.initialize(bodies);
+    for (auto &body : bodies)
+    {
+        std::cout << body << '\n';
+    }
+
     integrator(bodies, 1);
 
     std::cout << "After the integration:\n";

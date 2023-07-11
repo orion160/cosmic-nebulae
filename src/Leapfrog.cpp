@@ -7,28 +7,26 @@ LeapfrogIntegrator::LeapfrogIntegrator(const ForceEngine &forceEngine) : Integra
 {
 }
 
-void LeapfrogIntegrator::operator()(std::vector<Body> &bodies, const double deltaTime)
+void LeapfrogIntegrator::initialize(std::vector<Body> &bodies)
 {
-    // NOTE: acceleration at a_0 is not known to the user
-    // Only the acceleration after dt is presented
-    // NOTE: the api could have an initialize method which returns a_0
-    // also there would be no need to branch on deciding if use buffered acceleration
-
     using size_type = std::vector<Body>::size_type;
 
-    // Decide if use buffered acceleration from previous iteration
+    accelerationBuffer = forceEngine(bodies);
+
+    for (size_type i = 0; i < bodies.size(); ++i)
+    {
+        bodies[i].acceleration = accelerationBuffer[i];
+    }
+
+    isInitialized = true;
+}
+
+void LeapfrogIntegrator::operator()(std::vector<Body> &bodies, const double deltaTime)
+{
+    using size_type = std::vector<Body>::size_type;
+
     // currentAcceleration -> a_i
-    auto currentAccelerations = [&]() -> std::vector<Eigen::Vector3d> {
-        if (isInitialized)
-        {
-            return accelerationBuffer;
-        }
-        else
-        {
-            isInitialized = true;
-            return forceEngine(bodies);
-        }
-    }();
+    const auto &currentAccelerations = accelerationBuffer;
 
     // Compute position
     // nextPosition -> x_{i + 1}

@@ -20,7 +20,7 @@ std::vector<Eigen::Vector3d> BasicForceEngine::operator()(std::vector<Body> &bod
     return accelerations;
 }
 
-Eigen::Vector3d BasicForceEngine::bodyBodyInteraction(Body &current, Body &other) const
+Eigen::Vector3d BasicForceEngine::bodyBodyInteraction(Body &current, Body &other) const noexcept
 {
     Eigen::Vector3d r{other.position - current.position};
     double distSqr{r.squaredNorm() + BasicForceEngine::Epsilon2};
